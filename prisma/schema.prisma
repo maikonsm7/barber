@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String      @id @default(uuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bookings   Booking[]
+}
+
+model BarberShop {
+  id        String      @id @default(uuid())
+  name      String
+  address   String
+  phones    String[]
+  description String
+  imageUrl String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  services   BarberShopService[]
+  bookings   Booking[]
+}
+
+model BarberShopService {
+  id            String      @id @default(uuid())
+  name          String
+  description   String
+  price         Decimal @db.Decimal(10, 2)
+  duration      Int // Duration in minutes
+  imageUrl      String
+  barberShopId  String
+  barberShop    BarberShop @relation(fields: [barberShopId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  bookings      Booking[]
+}
+
+model Booking {
+  id            String      @id @default(uuid())
+  date          DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  barberShopId  String
+  barberShop    BarberShop  @relation(fields: [barberShopId], references: [id])
+  serviceId     String
+  service       BarberShopService @relation(fields: [serviceId], references: [id])
+}
