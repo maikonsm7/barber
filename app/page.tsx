@@ -18,7 +18,7 @@ export default function Home() {
         <Button className="ml-2"><Search /></Button>
         </div>
 
-        <div className="relative w-full h-[150px] mt-5 rounded-2xl overflow-hidden">
+        <div className="relative w-full h-37 mt-5 rounded-2xl overflow-hidden">
           <Image src={banner1} alt="Banner 1" fill className="object-cover"/>
         </div>
 
