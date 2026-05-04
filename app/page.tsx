@@ -4,11 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import banner1 from "@/public/banner-01.png";
+import cabelo from "@/public/cabelo.svg";
+import barba from "@/public/barba.svg";
+import acabamento from "@/public/acabamento.svg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import BarbershopItem from "@/components/barbershop-item";
 import { prisma } from "@/lib/prisma";
+import Footer from "@/components/footer";
 
 export default async function Home() {
   const barbershops = await prisma.barberShop.findMany({})
@@ -22,6 +26,12 @@ export default async function Home() {
         <div className="flex mt-5 items-center gap-1">
         <Input placeholder="Buscar..." />
         <Button className="ml-2"><Search /></Button>
+        </div>
+
+        <div className="flex justify-between mt-5">
+          <Button variant="outline" className="p-4"> <Image src={cabelo} alt="Cabelo" width={20} height={20} /> Cabelo</Button>
+          <Button variant="outline" className="p-4"> <Image src={barba} alt="Barba" width={20} height={20} /> Barba</Button>
+          <Button variant="outline" className="p-4"> <Image src={acabamento} alt="Acabamento" width={20} height={20} /> Acabamento</Button>
         </div>
 
         <div className="relative w-full h-37 mt-5 rounded-2xl overflow-hidden">
@@ -53,13 +63,14 @@ export default async function Home() {
 
         <h2 className="mt-5 uppercase text-gray-500">Recomendados</h2>
         
-        <div className="mt-3 flex gap-4 overflow-auto">
+        <div className="mt-3 flex gap-4 overflow-auto pb-4">
         {barbershops.map(barbershop => (
           <BarbershopItem key={barbershop.id} barbershop={barbershop} />
         ))}
         </div>
 
       </div>
+      <Footer />
     </>
   );
 }
