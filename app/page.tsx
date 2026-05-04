@@ -7,8 +7,11 @@ import banner1 from "@/public/banner-01.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import BarbershopItem from "@/components/barbershop-item";
+import { prisma } from "@/lib/prisma";
 
-export default function Home() {
+export default async function Home() {
+  const barbershops = await prisma.barberShop.findMany({})
   return (
     <>
       <Header />
@@ -22,10 +25,12 @@ export default function Home() {
         </div>
 
         <div className="relative w-full h-37 mt-5 rounded-2xl overflow-hidden">
-          <Image src={banner1} alt="Banner 1" fill className="object-cover"/>
+          <Image src={banner1} loading="eager" alt="Banner 1" fill className="object-cover"/>
         </div>
 
-        <Card className="mt-5 rounded-xl p-0">
+        <h2 className="mt-5 uppercase text-gray-500">Agendamentos</h2>
+
+        <Card className="mt-3 rounded-xl p-0">
           <CardContent className="flex justify-between p-0">
             <div className="flex flex-col gap-2 p-5">
               <Badge>Confirmado</Badge>
@@ -45,6 +50,14 @@ export default function Home() {
             </div>
           </CardContent>
         </Card>
+
+        <h2 className="mt-5 uppercase text-gray-500">Recomendados</h2>
+        
+        <div className="mt-3 flex gap-4 overflow-auto">
+        {barbershops.map(barbershop => (
+          <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+        ))}
+        </div>
 
       </div>
     </>

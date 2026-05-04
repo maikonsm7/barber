@@ -1,0 +1,27 @@
+import { BarberShop } from "@/app/generated/prisma/client";
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
+import { Button } from "./ui/button";
+
+interface BarbershopItemProps {
+  barbershop: BarberShop
+}
+
+export default function BarbershopItem({ barbershop }: BarbershopItemProps) {
+  return (
+    <Card className="rounded-xl min-w-44 p-0">
+      <CardContent className="p-2">
+        <div className="relative h-39 w-full rounded-xl overflow-hidden">
+          <Image alt={barbershop.name} src={barbershop.imageUrl} fill className="object-cover" />
+        </div>
+        <div className="py-3">
+          <h3 className="font-semibold truncate">{barbershop.name}</h3>
+          <p className="text-sm text-muted-foreground truncate">{barbershop.address}</p>
+          <Button className="w-full mt-3" variant="outline">
+            Agendar
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

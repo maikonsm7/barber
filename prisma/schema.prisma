@@ -39,7 +39,6 @@ model BarberShopService {
   name          String
   description   String
   price         Decimal @db.Decimal(10, 2)
-  duration      Int // Duration in minutes
   imageUrl      String
   barberShopId  String
   barberShop    BarberShop @relation(fields: [barberShopId], references: [id])

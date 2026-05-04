@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <Card className="rounded-none py-3">
       <CardContent className="flex flex-row items-center justify-between">
-        <Image src={logo} alt="Logo" width={120} height={40} />
+        <Image src={logo} alt="Logo" width={120} />
         <Button variant="outline" size="icon"><Menu /></Button>
       </CardContent>
     </Card>
