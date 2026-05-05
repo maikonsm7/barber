@@ -1,9 +1,12 @@
 import Link from "next/link"
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
+import { ChevronLeftIcon, MapPinIcon, MenuIcon, SmartphoneIcon, StarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
+import ServiceItem from "@/components/service-item";
+import Footer from "@/components/footer";
+import PhoneItem from "@/components/phone-item";
 
 export default async function BarberShopPage({
     params,
@@ -14,6 +17,9 @@ export default async function BarberShopPage({
     const barbershop = await prisma.barberShop.findUnique({
         where: {
             id
+        },
+        include: {
+            services: true
         }
     })
     if (!barbershop) {
@@ -57,10 +63,21 @@ export default async function BarberShopPage({
                 <p className="text-sm text-muted-foreground">{barbershop?.description}</p>
             </div>
 
-            <div className="p-5 border-b text-justify space-y-2">
+            <div className="p-5 space-y-3 border-b">
                 <h2 className="uppercase text-gray-500">Serviços</h2>
-                
+                {barbershop.services.length > 0 && barbershop.services.map(service => (
+                    <ServiceItem key={service.id} barbershopService={service} />
+                ))}
             </div>
+
+            <div className="p-5 space-y-3">
+                <h2 className="uppercase text-gray-500">Contatos</h2>
+                {barbershop.phones.length > 0 && barbershop.phones.map((phone, i) => (
+                    <PhoneItem key={i} phone={phone} />
+                ))}
+            </div>
+
+            <Footer />
         </>
     )
 }

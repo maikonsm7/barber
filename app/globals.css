@@ -89,7 +89,7 @@
     --card-foreground: oklch(0.985 0 0);
     --popover: oklch(0.205 0 0);
     --popover-foreground: oklch(0.985 0 0);
-    --primary: rgb(91, 29, 192);
+    --primary: rgb(150, 88, 249);
     --primary-foreground: oklch(100% 0.00011 271.152);
     --secondary: oklch(0.269 0 0);
     --secondary-foreground: oklch(0.985 0 0);
@@ -118,7 +118,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 antialiased;
     }
   body {
     @apply bg-background text-foreground;
