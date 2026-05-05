@@ -4,13 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import banner1 from "@/public/banner-01.png";
-import cabelo from "@/public/cabelo.svg";
-import barba from "@/public/barba.svg";
-import acabamento from "@/public/acabamento.svg";
 import BarbershopItem from "@/components/barbershop-item";
 import { prisma } from "@/lib/prisma";
 import Footer from "@/components/footer";
 import BookingItem from "@/components/booking-item";
+import { quickSearchOptions } from "./_constants/search";
 
 export default async function Home() {
   const barbershops = await prisma.barberShop.findMany({})
@@ -26,11 +24,11 @@ export default async function Home() {
         <Button className="ml-2"><Search /></Button>
         </div>
 
-        <div className="flex justify-between mt-5">
-          <Button variant="outline" className="p-4"> <Image src={cabelo} alt="Cabelo" width={20} height={20} /> Cabelo</Button>
-          <Button variant="outline" className="p-4"> <Image src={barba} alt="Barba" width={20} height={20} /> Barba</Button>
-          <Button variant="outline" className="p-4"> <Image src={acabamento} alt="Acabamento" width={20} height={20} /> Acabamento</Button>
-        </div>
+        <div className="flex justify-between mt-5 overflow-auto pb-4">
+          {quickSearchOptions.map((option, i) => (
+            <Button key={i} variant="outline" className="p-4"> <Image src={option.imageUrl} alt={option.title} width={20} height={20} /> {option.title}</Button>
+          ))}
+          </div>
 
         <div className="relative w-full h-37 mt-5 rounded-2xl overflow-hidden">
           <Image src={banner1} loading="eager" alt="Banner 1" fill className="object-cover"/>
