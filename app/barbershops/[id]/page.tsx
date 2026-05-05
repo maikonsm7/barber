@@ -1,12 +1,14 @@
 import Link from "next/link"
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, SmartphoneIcon, StarIcon } from "lucide-react";
+import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
 import ServiceItem from "@/components/service-item";
 import Footer from "@/components/footer";
 import PhoneItem from "@/components/phone-item";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import SidebarSheet from "@/components/sidebar-sheet";
 
 export default async function BarberShopPage({
     params,
@@ -31,17 +33,21 @@ export default async function BarberShopPage({
             <div className="relative h-60 w-full rounded-xl">
                 <Image src={barbershop?.imageUrl || ""} alt={barbershop?.name || ""} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
 
-                <Link href="/" className="absolute top-2 left-2">
-                    <Button className="rounded-xl w-15 h-14 bg-black" asChild>
+                <Button variant="secondary" size="icon" className="absolute top-2 left-2" asChild>
+                    <Link href="/">
                         <ChevronLeftIcon />
-                    </Button>
-                </Link>
+                    </Link>
+                </Button>
 
-                <Link href="/" className="absolute top-2 right-2">
-                    <Button className="rounded-xl w-15 h-14 bg-black" asChild>
-                        <MenuIcon />
-                    </Button>
-                </Link>
+                <Sheet>
+                    <SheetTrigger asChild>
+                        <Button variant="secondary" size="icon" className="absolute top-2 right-2">
+                            <MenuIcon />
+                        </Button>
+                    </SheetTrigger>
+                    <SidebarSheet />
+                </Sheet>
+
             </div>
 
             <div className="flex flex-col gap-3 p-5 border-b">
