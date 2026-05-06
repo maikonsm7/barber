@@ -6,7 +6,6 @@ import Image from "next/image";
 import banner1 from "@/public/banner-01.png";
 import BarbershopItem from "@/components/barbershop-item";
 import { prisma } from "@/lib/prisma";
-import Footer from "@/components/footer";
 import BookingItem from "@/components/booking-item";
 import { quickSearchOptions } from "./_constants/search";
 
@@ -47,7 +46,6 @@ export default async function Home() {
         </div>
 
       </div>
-      <Footer />
     </>
   );
 }

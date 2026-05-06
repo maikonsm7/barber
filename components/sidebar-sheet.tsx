@@ -1,60 +1,103 @@
+"use client"
+
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { CalendarIcon, HomeIcon, LogOutIcon } from "lucide-react";
+import { CalendarIcon, HomeIcon, LogInIcon, LogOutIcon } from "lucide-react";
 import { SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetClose } from "./ui/sheet";
 import { quickSearchOptions } from "@/app/_constants/search";
 import { Avatar, AvatarImage } from "./ui/avatar";
+import google from "@/public/google.svg"
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react"
 
-export default function SidebarSheet(){
-    return (
-        <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Menu</SheetTitle>
-              <SheetDescription></SheetDescription>
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
-              <div className="flex items-center gap-3 mt-5">
-                <Avatar className="w-12 h-12">
-                  <AvatarImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhcS1x_oRjzyj-FlAxy1W6f_3d1r7Bzcu1I7wR6I16BQ&s&ec=121657058" />
-                </Avatar>
-                <div>
-                  <h3 className="font-bold">Maikon</h3>
-                  <p className="text-xs text-muted">maikon@gmail.com</p>
-                </div>
-              </div>
+export default function SidebarSheet() {
+  const { data } = useSession()
+  const handleLogin = () => signIn("google")
+  const handleLogout = () => signOut()
 
-            </SheetHeader>
+  return (
+    <SheetContent>
+      <SheetHeader>
+        <SheetTitle>Menu</SheetTitle>
+        <SheetDescription></SheetDescription>
+      </SheetHeader>
 
-            <div className="flex flex-col p-5 gap-4 border-b">
-              <SheetClose asChild>
-                <Button className="justify-start gap-2" asChild>
-                  <Link href="/">
-                    <HomeIcon size={18} />
-                    Inicio
-                  </Link>
-                </Button>
-              </SheetClose>
-
-              <Button className="justify-start gap-2" variant="ghost">
-                <CalendarIcon size={18} />
-                Agendamentos
+      {data?.user ? (
+        <div className="flex items-center gap-3 px-5">
+          <Avatar className="w-12 h-12">
+            <AvatarImage src={data.user.image as string} />
+          </Avatar>
+          <div>
+            <h3 className="font-bold">{data.user.name}</h3>
+            <p className="text-xs text-muted">{data.user.email}</p>
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between p-5">
+          <h2 className="font-bold text-lg">Olá! Faça seu login!</h2>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>
+                <LogInIcon />
               </Button>
-            </div>
-
-            <div className="flex flex-col p-5 gap-4">
-              {quickSearchOptions.map((option, i) => (
-                <Button key={i} className="justify-start gap-4" variant="ghost" asChild>
-                  <Link href="/">
-                    <Image src={option.imageUrl} alt={option.title} width={20} height={20} />
-                    {option.title}
-                  </Link>
-                </Button>
-              ))}
-              <Button className="justify-start gap-4" variant="ghost">
-                <LogOutIcon />
-                Sair
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-sm">
+              <DialogHeader>
+                <DialogTitle>Login</DialogTitle>
+                <DialogDescription>
+                  Faça o login com sua conta Google.
+                </DialogDescription>
+              </DialogHeader>
+              <Button className="font-bold" onClick={handleLogin}>
+                <Image alt="Fazer login com o Google" src={google} />
+                Google
               </Button>
-            </div>
-          </SheetContent>
-    )
+            </DialogContent>
+          </Dialog>
+        </div>
+      )}
+
+      <div className="flex flex-col p-5 gap-4 border-b">
+        <SheetClose asChild>
+          <Button className="justify-start gap-2" asChild>
+            <Link href="/">
+              <HomeIcon size={18} />
+              Inicio
+            </Link>
+          </Button>
+        </SheetClose>
+
+        <Button className="justify-start gap-2" variant="ghost">
+          <CalendarIcon size={18} />
+          Agendamentos
+        </Button>
+      </div>
+
+      <div className="flex flex-col p-5 gap-4">
+        {quickSearchOptions.map((option, i) => (
+          <Button key={i} className="justify-start gap-4" variant="ghost" asChild>
+            <Link href="/">
+              <Image src={option.imageUrl} alt={option.title} width={20} height={20} />
+              {option.title}
+            </Link>
+          </Button>
+        ))}
+        {data?.user && (
+          <Button className="justify-start gap-4" variant="ghost" onClick={handleLogout}>
+            <LogOutIcon />
+            Sair
+          </Button>
+        )}
+      </div>
+    </SheetContent>
+  )
 }

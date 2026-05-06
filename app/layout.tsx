@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/themes-provider";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
+import Footer from "@/components/footer";
+import AuthProvider from "./_providers/auth";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -18,15 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn("font-sans", inter.variable)}>
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn("font-sans antialiased", inter.variable)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthProvider>
+            {children}
+            <Footer />
+          </AuthProvider>
           <Toaster />
         </ThemeProvider>
       </body>

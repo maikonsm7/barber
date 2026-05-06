@@ -82,8 +82,6 @@ export default async function BarberShopPage({
                     <PhoneItem key={i} phone={phone} />
                 ))}
             </div>
-
-            <Footer />
         </>
     )
 }
