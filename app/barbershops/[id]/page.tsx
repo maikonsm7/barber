@@ -1,14 +1,13 @@
 import Link from "next/link"
-import { prisma } from "@/lib/prisma";
+import PrismaClient from "@/lib/prisma";
 import Image from "next/image";
 import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/_components/ui/button";
 import { notFound } from "next/navigation";
-import ServiceItem from "@/components/service-item";
-import Footer from "@/components/footer";
-import PhoneItem from "@/components/phone-item";
-import { Sheet, SheetTrigger } from "@/components/ui/sheet";
-import SidebarSheet from "@/components/sidebar-sheet";
+import ServiceItem from "@/app/_components/service-item";
+import PhoneItem from "@/app/_components/phone-item";
+import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
+import SidebarSheet from "@/app/_components/sidebar-sheet";
 
 export default async function BarberShopPage({
     params,
@@ -16,7 +15,7 @@ export default async function BarberShopPage({
     params: Promise<{ id: string }>
 }) {
     const { id } = await params
-    const barbershop = await prisma.barberShop.findUnique({
+    const barbershop = await PrismaClient.barberShop.findUnique({
         where: {
             id
         },

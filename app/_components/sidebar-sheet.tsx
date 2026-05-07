@@ -17,7 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/app/_components/ui/dialog"
 
 export default function SidebarSheet() {
   const { data } = useSession()
@@ -84,12 +84,14 @@ export default function SidebarSheet() {
 
       <div className="flex flex-col p-5 gap-4">
         {quickSearchOptions.map((option, i) => (
-          <Button key={i} className="justify-start gap-4" variant="ghost" asChild>
-            <Link href="/">
-              <Image src={option.imageUrl} alt={option.title} width={20} height={20} />
-              {option.title}
-            </Link>
-          </Button>
+          <SheetClose key={i} asChild>
+            <Button className="justify-start gap-4" variant="ghost">
+              <Link href={`/barbershops?search=${option.title}`} className="flex gap-4">
+                <Image src={option.imageUrl} alt={option.title} width={20} height={20} />
+                {option.title}
+              </Link>
+            </Button>
+          </SheetClose>
         ))}
         {data?.user && (
           <Button className="justify-start gap-4" variant="ghost" onClick={handleLogout}>

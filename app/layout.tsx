@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/themes-provider";
+import { ThemeProvider } from "@/app/_components/themes-provider";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
-import Footer from "@/components/footer";
+import Footer from "@/app/_components/footer";
 import { AuthProvider } from "./_providers/auth";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});

@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/app/_components/ui/card";
+import { Avatar, AvatarImage } from "@/app/_components/ui/avatar";
+import { Badge } from "@/app/_components/ui/badge";
 export default function BookingItem() {
     return (
         <Card className="mt-3 rounded-xl p-0">

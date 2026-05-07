@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/app/_components/ui/card";
 
 export default function Footer() {
   const date = new Date().getFullYear();

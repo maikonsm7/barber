@@ -1,5 +1,5 @@
 import { BarberShopService } from "@/app/generated/prisma/client";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/app/_components/ui/card";
 import Image from "next/image";
 import { Button } from "./ui/button";
 

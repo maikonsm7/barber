@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/app/_components/ui/card";
 import Image from "next/image";
 import logo from "@/public/logo.png";
 import { Button } from "./ui/button";
@@ -14,7 +14,9 @@ export default function Header() {
 
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon"><MenuIcon /></Button>
+            <Button variant="outline" size="icon">
+              <MenuIcon />
+              </Button>
           </SheetTrigger>
           <SidebarSheet />
         </Sheet>
