@@ -13,10 +13,10 @@ export default function Header() {
         <Image src={logo} alt="Logo" width={120} />
 
         <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline" size="icon">
+          <SheetTrigger>
+            <Button variant="secondary" size="icon" className="p-2" asChild>
               <MenuIcon />
-              </Button>
+            </Button>
           </SheetTrigger>
           <SidebarSheet />
         </Sheet>

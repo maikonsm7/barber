@@ -30,7 +30,7 @@ export default async function BarberShopPage({
     return (
         <>
             <div className="relative h-60 w-full rounded-xl">
-                <Image src={barbershop?.imageUrl || ""} alt={barbershop?.name || ""} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                <Image src={barbershop?.imageUrl || ""} loading="eager" alt={barbershop?.name || ""} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
 
                 <Button variant="secondary" size="icon" className="absolute top-2 left-2" asChild>
                     <Link href="/">

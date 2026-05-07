@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 import Footer from "@/app/_components/footer";
 import { AuthProvider } from "./_providers/auth";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("font-sans antialiased", inter.variable)}>
+      <body className={cn("font-sans antialiased", inter.variable)} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

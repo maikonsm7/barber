@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { CalendarIcon, HomeIcon, LogInIcon, LogOutIcon } from "lucide-react";
+import { CalendarIcon, HomeIcon, Key, LogInIcon, LogOutIcon } from "lucide-react";
 import { SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetClose } from "./ui/sheet";
 import { quickSearchOptions } from "@/app/_constants/search";
 import { Avatar, AvatarImage } from "./ui/avatar";
@@ -85,7 +85,7 @@ export default function SidebarSheet() {
       <div className="flex flex-col p-5 gap-4">
         {quickSearchOptions.map((option, i) => (
           <SheetClose key={i} asChild>
-            <Button className="justify-start gap-4" variant="ghost">
+            <Button className="justify-start gap-4" variant="ghost" asChild>
               <Link href={`/barbershops?search=${option.title}`} className="flex gap-4">
                 <Image src={option.imageUrl} alt={option.title} width={20} height={20} />
                 {option.title}
