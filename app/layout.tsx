@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import Footer from "@/components/footer";
-import AuthProvider from "./_providers/auth";
+import { AuthProvider } from "./_providers/auth";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
