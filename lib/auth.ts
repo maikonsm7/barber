@@ -16,6 +16,5 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET as string,
   session: {
     strategy: "database", // Importante quando se usa Adapter
-  },
-  debug: true
+  }
 }

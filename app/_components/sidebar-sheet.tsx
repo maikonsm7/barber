@@ -34,7 +34,7 @@ export default function SidebarSheet() {
       {data?.user ? (
         <div className="flex items-center gap-3 px-5">
           <Avatar className="w-12 h-12">
-            <AvatarImage src={data.user.image as string} />
+            <AvatarImage src={data.user.image || ""} />
           </Avatar>
           <div>
             <h3 className="font-bold">{data.user.name}</h3>

@@ -26,6 +26,7 @@ export default async function BarberShopPage({
     if (!barbershop) {
         return notFound()
     }
+    const data = barbershop.services.map(serv => ({...serv, price: Number(serv.price)}))
 
     return (
         <>
@@ -40,7 +41,7 @@ export default async function BarberShopPage({
 
                 <Sheet>
                     <SheetTrigger asChild>
-                        <Button variant="secondary" size="icon" className="absolute top-2 right-2">
+                        <Button variant="secondary" size="icon" className="absolute top-2 right-2 p-2" asChild>
                             <MenuIcon />
                         </Button>
                     </SheetTrigger>
@@ -70,8 +71,8 @@ export default async function BarberShopPage({
 
             <div className="p-5 space-y-3 border-b">
                 <h2 className="uppercase text-gray-500">Serviços</h2>
-                {barbershop.services.length > 0 && barbershop.services.map(service => (
-                    <ServiceItem key={service.id} barbershopService={service} />
+                {data.length > 0 && data.map(service => (
+                    <ServiceItem key={service.id} barbershopService={service} barbershopName={barbershop.name} />
                 ))}
             </div>
 
