@@ -3,13 +3,17 @@
 import { Card, CardContent } from "@/app/_components/ui/card";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "./ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetClose, SheetFooter } from "./ui/sheet";
 import { Calendar } from "./ui/calendar";
 import { ptBR } from "date-fns/locale";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createBooking } from "../_actions/create-booking";
 import { useSession } from "next-auth/react";
-import { set } from "date-fns";
+import { addDays, set } from "date-fns";
+import { toast } from "sonner";
+import { getBookings } from "../_actions/get-bookings";
+import { Booking } from "../generated/prisma/client";
+import { before } from "node:test";
 
 interface BarberShopServiceProps {
   service: {
@@ -50,9 +54,30 @@ const TIME_LIST = [
 ]
 
 export default function ServiceItem({ service, barbershopName }: BarberShopServiceProps) {
+  const [availableTimes, setAvailableTimes] = useState<string[]>([])
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string>("")
-  const {data} = useSession()
+  const { data } = useSession()
+
+  const obterHoraFormatada = (date: Date) => {
+    return date.toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false // Define formato 24h
+    })
+  }
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (!selectedDay) return
+      const bookings = await getBookings({ date: selectedDay, serviceId: service.id })
+      const bookinsOfTheDay = bookings.map(booking => obterHoraFormatada(booking.date))
+      const filteredBookings = TIME_LIST.filter(time => !bookinsOfTheDay.includes(time))
+      setAvailableTimes(filteredBookings)
+    }
+    fetch()
+  }, [selectedDay])
+
   const handleDateSelected = (date: Date | undefined) => {
     setSelectedDay(date)
   }
@@ -60,7 +85,7 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
     setSelectedTime(time)
   }
   const handleCreateBooking = async () => {
-    if(!selectedDay || !selectedTime) return
+    if (!selectedDay || !selectedTime) return
 
     const hours = selectedTime.split(":")[0]
     const minute = selectedTime.split(":")[1]
@@ -68,11 +93,18 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
       minutes: Number(minute),
       hours: Number(hours),
     })
-    // await createBooking({
-    //   userId: data?.user,
-    //   serviceId: service.id,
-    //   date: newDate
-    // })
+    try {
+      await createBooking({
+        userId: (data?.user as any).id,
+        serviceId: service.id,
+        date: newDate
+      })
+      setAvailableTimes(previosAvailableTimes => previosAvailableTimes.filter(item => item !== selectedTime))
+      setSelectedTime("")
+      toast.success("reserva criada com sucesso!")
+    } catch (error) {
+      toast.error("erro ao criar reserva")
+    }
   }
 
   return (
@@ -106,12 +138,13 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
                     className="rounded-lg border"
                     selected={selectedDay}
                     onSelect={handleDateSelected}
+                    disabled={{before: new Date()}}
                   />
                 </div>
 
-                {selectedDay && (
+                {availableTimes && (
                   <div className="flex py-5 px-3 gap-3 overflow-auto border-b">
-                    {TIME_LIST.map(time => (
+                    {availableTimes.map(time => (
                       <Button
                         key={time}
                         variant={selectedTime === time ? "default" : "outline"}
@@ -144,10 +177,11 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
                       </div>
                     </CardContent>
                   </Card>
-                  <Button className="mx-4 mt-4">Confirmar</Button>
                 </>
                 )}
-
+                <SheetFooter>
+                  <Button type="submit" onClick={handleCreateBooking} disabled={!selectedDay || !selectedTime}>Confirmar</Button>
+                </SheetFooter>
               </SheetContent>
 
             </Sheet>

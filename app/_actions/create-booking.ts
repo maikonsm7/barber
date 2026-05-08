@@ -1,4 +1,5 @@
-"user server"
+"use server"
+
 import prisma from "@/lib/prisma"
 
 interface CreateBookingParams{
