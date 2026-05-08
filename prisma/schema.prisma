@@ -71,7 +71,6 @@ model BarberShop {
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @updatedAt
   services    BarberShopService[]
-  bookings    Booking[]
 }
 
 model BarberShopService {
@@ -95,8 +94,6 @@ model Booking {
 
   userId       String
   user         User              @relation(fields: [userId], references: [id])
-  barberShopId String
-  barberShop   BarberShop        @relation(fields: [barberShopId], references: [id])
   serviceId    String
   service      BarberShopService @relation(fields: [serviceId], references: [id])
 }

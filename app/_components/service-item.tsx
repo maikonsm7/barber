@@ -7,17 +7,20 @@ import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescri
 import { Calendar } from "./ui/calendar";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
+import { createBooking } from "../_actions/create-booking";
+import { useSession } from "next-auth/react";
+import { set } from "date-fns";
 
 interface BarberShopServiceProps {
-  barbershopService: {
+  service: {
     id: string;
     name: string;
     description: string;
+    price: Number;
     imageUrl: string;
+    barberShopId: string;
     createdAt: Date;
     updatedAt: Date;
-    price: Number;
-    barberShopId: string;
   },
   barbershopName: string
 }
@@ -46,28 +49,44 @@ const TIME_LIST = [
   "18:00",
 ]
 
-export default function ServiceItem({ barbershopService, barbershopName }: BarberShopServiceProps) {
+export default function ServiceItem({ service, barbershopName }: BarberShopServiceProps) {
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string>("")
+  const {data} = useSession()
   const handleDateSelected = (date: Date | undefined) => {
     setSelectedDay(date)
   }
   const handleTimeSelected = (time: string) => {
     setSelectedTime(time)
   }
+  const handleCreateBooking = async () => {
+    if(!selectedDay || !selectedTime) return
+
+    const hours = selectedTime.split(":")[0]
+    const minute = selectedTime.split(":")[1]
+    const newDate = set(selectedDay, {
+      minutes: Number(minute),
+      hours: Number(hours),
+    })
+    // await createBooking({
+    //   userId: data?.user,
+    //   serviceId: service.id,
+    //   date: newDate
+    // })
+  }
 
   return (
     <Card className="rounded-xl min-w-44 p-1">
       <CardContent className="flex p-1 gap-4">
         <div className="relative h-30 w-60 rounded-xl overflow-hidden">
-          <Image alt={barbershopService.name} loading="eager" src={barbershopService.imageUrl} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+          <Image alt={service.name} loading="eager" src={service.imageUrl} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
         </div>
         <div>
-          <h3 className="font-semibold truncate">{barbershopService.name}</h3>
-          <p className="text-sm text-muted-foreground">{barbershopService.description}</p>
+          <h3 className="font-semibold truncate">{service.name}</h3>
+          <p className="text-sm text-muted-foreground">{service.description}</p>
 
           <div className="flex items-center justify-between mt-3">
-            <p className="text-sm font-bold text-primary">R$ {barbershopService.price.toFixed(2)}</p>
+            <p className="text-sm font-bold text-primary">R$ {service.price.toFixed(2)}</p>
 
             <Sheet>
               <SheetTrigger asChild>
@@ -107,8 +126,8 @@ export default function ServiceItem({ barbershopService, barbershopName }: Barbe
                     <CardContent className="p-0">
                       <div className="flex flex-col gap-2">
                         <div className="flex justify-between font-bold">
-                          <p>{barbershopService.name}</p>
-                          <p>R$ {barbershopService.price.toFixed(2)}</p>
+                          <p>{service.name}</p>
+                          <p>R$ {service.price.toFixed(2)}</p>
                         </div>
                         <div className="flex justify-between">
                           <p className="text-muted">Data</p>
