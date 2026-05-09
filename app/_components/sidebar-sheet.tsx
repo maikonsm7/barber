@@ -5,7 +5,6 @@ import { Button } from "./ui/button";
 import { CalendarIcon, HomeIcon, LogInIcon, LogOutIcon } from "lucide-react";
 import { SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetClose } from "./ui/sheet";
 import { quickSearchOptions } from "@/app/_constants/search";
-import { Avatar, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react"
 
@@ -14,6 +13,7 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog"
 import SignInDialog from "./sign-in-dialog";
+import { AvatarProfile } from "./avatar-profile";
 
 export default function SidebarSheet() {
   const { data } = useSession()
@@ -28,9 +28,7 @@ export default function SidebarSheet() {
 
       {data?.user ? (
         <div className="flex items-center gap-3 px-5">
-          <Avatar className="w-12 h-12">
-            <AvatarImage src={data.user.image || ""} />
-          </Avatar>
+          <AvatarProfile imageUrl={data?.user.image || ""} /> 
           <div>
             <h3 className="font-bold">{data.user.name}</h3>
             <p className="text-xs text-muted">{data.user.email}</p>
