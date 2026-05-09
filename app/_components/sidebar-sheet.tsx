@@ -7,7 +7,7 @@ import { SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetClose } f
 import { quickSearchOptions } from "@/app/_constants/search";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 
 import {
   Dialog,
@@ -17,7 +17,6 @@ import SignInDialog from "./sign-in-dialog";
 
 export default function SidebarSheet() {
   const { data } = useSession()
-  const handleLogin = () => signIn("google")
   const handleLogout = () => signOut()
 
   return (
@@ -61,9 +60,11 @@ export default function SidebarSheet() {
           </Button>
         </SheetClose>
 
-        <Button className="justify-start gap-2" variant="ghost">
+        <Button className="justify-start gap-2" variant="ghost" asChild>
+          <Link href="/bookings">
           <CalendarIcon size={18} />
           Agendamentos
+          </Link>
         </Button>
       </div>
 

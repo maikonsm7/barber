@@ -9,8 +9,33 @@ import BookingItem from "@/app/_components/booking-item";
 import { quickSearchOptions } from "./_constants/search";
 import SearchBar from "./_components/search";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
 export default async function Home() {
+  const data = await getServerSession(authOptions)
+  let bookings = null
+  if (data?.user) {
+    const today = new Date()
+    bookings = await prisma.booking.findMany({
+      where: {
+        userId: (data?.user as any).id,
+        date: {
+          gte: today,
+          lte: today
+        }
+      },
+      include: {
+        service: {
+          include: {
+            barberShop: true
+          }
+        },
+      }
+    })
+  }
+
   const barbershops = await prismaClient.barberShop.findMany({})
   return (
     <>
@@ -35,9 +60,12 @@ export default async function Home() {
           <Image src={banner1} loading="eager" alt="Banner 1" fill className="object-cover" />
         </div>
 
-        <h2 className="mt-5 uppercase text-gray-500">Agendamentos</h2>
-
-        <BookingItem />
+        {bookings && bookings.length > 0 && (<>
+          <h2 className="mt-5 uppercase text-gray-500">Agendamentos</h2>
+          {bookings.map(booking => (
+            <BookingItem key={booking.id} booking={booking} status="Confirmado" />
+          ))}
+        </>)}
 
         <h2 className="mt-5 uppercase text-gray-500">Recomendados</h2>
 

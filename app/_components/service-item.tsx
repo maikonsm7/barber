@@ -62,7 +62,7 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
 
   useEffect(()=>{
     if(data?.user) setLogged(true)
-  })
+  }, [])
 
   const obterHoraFormatada = (date: Date) => {
     return date.toLocaleTimeString('pt-BR', {
@@ -100,7 +100,6 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
     })
     try {
       await createBooking({
-        userId: (data?.user as any).id,
         serviceId: service.id,
         date: newDate
       })
