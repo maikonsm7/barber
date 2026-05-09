@@ -2,22 +2,18 @@
 
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { CalendarIcon, HomeIcon, Key, LogInIcon, LogOutIcon } from "lucide-react";
+import { CalendarIcon, HomeIcon, LogInIcon, LogOutIcon } from "lucide-react";
 import { SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetClose } from "./ui/sheet";
 import { quickSearchOptions } from "@/app/_constants/search";
 import { Avatar, AvatarImage } from "./ui/avatar";
-import google from "@/public/google.svg"
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react"
 
 import {
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/app/_components/ui/dialog"
+import SignInDialog from "./sign-in-dialog";
 
 export default function SidebarSheet() {
   const { data } = useSession()
@@ -50,18 +46,7 @@ export default function SidebarSheet() {
                 <LogInIcon />
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-sm">
-              <DialogHeader>
-                <DialogTitle>Login</DialogTitle>
-                <DialogDescription>
-                  Faça o login com sua conta Google.
-                </DialogDescription>
-              </DialogHeader>
-              <Button className="font-bold" onClick={handleLogin}>
-                <Image alt="Fazer login com o Google" src={google} />
-                Google
-              </Button>
-            </DialogContent>
+            <SignInDialog />
           </Dialog>
         </div>
       )}

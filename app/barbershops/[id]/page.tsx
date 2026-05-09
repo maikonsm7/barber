@@ -8,6 +8,7 @@ import ServiceItem from "@/app/_components/service-item";
 import PhoneItem from "@/app/_components/phone-item";
 import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
 import SidebarSheet from "@/app/_components/sidebar-sheet";
+import MsgLogged from "@/app/_components/msg-logged";
 
 export default async function BarberShopPage({
     params,
@@ -74,7 +75,10 @@ export default async function BarberShopPage({
             </div>
 
             <div className="p-5 space-y-3 border-b">
+                <div className="flex justify-between">
                 <h2 className="uppercase text-gray-500">Serviços</h2>
+                <MsgLogged />
+                </div>
                 {serializedServices.length > 0 && serializedServices.map(service => (
                     <ServiceItem key={service.id} service={service} barbershopName={barbershop.name} />
                 ))}

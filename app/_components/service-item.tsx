@@ -9,11 +9,11 @@ import { ptBR } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { createBooking } from "../_actions/create-booking";
 import { useSession } from "next-auth/react";
-import { addDays, set } from "date-fns";
+import { set } from "date-fns";
 import { toast } from "sonner";
 import { getBookings } from "../_actions/get-bookings";
-import { Booking } from "../generated/prisma/client";
-import { before } from "node:test";
+import SignInDialog from "./sign-in-dialog";
+import { Dialog } from "./ui/dialog";
 
 interface BarberShopServiceProps {
   service: {
@@ -57,7 +57,12 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
   const [availableTimes, setAvailableTimes] = useState<string[]>([])
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string>("")
+  const [logged, setLogged] = useState(false)
   const { data } = useSession()
+
+  useEffect(()=>{
+    if(data?.user) setLogged(true)
+  })
 
   const obterHoraFormatada = (date: Date) => {
     return date.toLocaleTimeString('pt-BR', {
@@ -108,6 +113,7 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
   }
 
   return (
+    <>
     <Card className="rounded-xl min-w-44 p-1">
       <CardContent className="flex p-1 gap-4">
         <div className="relative h-30 w-60 rounded-xl overflow-hidden">
@@ -122,7 +128,7 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
 
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" className="">Agendar</Button>
+                <Button variant="outline" disabled={!logged}>Agendar</Button>
               </SheetTrigger>
 
               <SheetContent>
@@ -141,8 +147,8 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
                     disabled={{before: new Date()}}
                   />
                 </div>
-
-                {availableTimes && (
+                
+                {availableTimes && availableTimes.length > 0 && (
                   <div className="flex py-5 px-3 gap-3 overflow-auto border-b">
                     {availableTimes.map(time => (
                       <Button
@@ -190,5 +196,10 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
         </div>
       </CardContent>
     </Card>
+
+    <Dialog>
+      <SignInDialog />
+    </Dialog>
+    </>
   );
 }
