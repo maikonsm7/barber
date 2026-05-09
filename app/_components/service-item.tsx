@@ -60,8 +60,8 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
   const [logged, setLogged] = useState(false)
   const { data } = useSession()
 
-  useEffect(()=>{
-    if(data?.user) setLogged(true)
+  useEffect(() => {
+    if (data?.user) setLogged(true)
   }, [])
 
   const obterHoraFormatada = (date: Date) => {
@@ -113,92 +113,92 @@ export default function ServiceItem({ service, barbershopName }: BarberShopServi
 
   return (
     <>
-    <Card className="rounded-xl min-w-44 p-1">
-      <CardContent className="flex p-1 gap-4">
-        <div className="relative h-30 w-60 rounded-xl overflow-hidden">
-          <Image alt={service.name} loading="eager" src={service.imageUrl} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
-        </div>
-        <div>
-          <h3 className="font-semibold truncate">{service.name}</h3>
-          <p className="text-sm text-muted-foreground">{service.description}</p>
-
-          <div className="flex items-center justify-between mt-3">
-            <p className="text-sm font-bold text-primary">R$ {service.price.toFixed(2)}</p>
-
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" disabled={!logged}>Agendar</Button>
-              </SheetTrigger>
-
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>Fazer reserva</SheetTitle>
-                  <SheetDescription></SheetDescription>
-                </SheetHeader>
-
-                <div className="py-5 flex justify-center border-b">
-                  <Calendar
-                    mode="single"
-                    locale={ptBR}
-                    className="rounded-lg border"
-                    selected={selectedDay}
-                    onSelect={handleDateSelected}
-                    disabled={{before: new Date()}}
-                  />
-                </div>
-                
-                {availableTimes && availableTimes.length > 0 && (
-                  <div className="flex py-5 px-3 gap-3 overflow-auto border-b">
-                    {availableTimes.map(time => (
-                      <Button
-                        key={time}
-                        variant={selectedTime === time ? "default" : "outline"}
-                        onClick={() => handleTimeSelected(time)}>{time}
-                      </Button>
-                    ))}
-                  </div>
-                )}
-
-                {selectedTime && (<>
-                  <Card className="p-4 m-4">
-                    <CardContent className="p-0">
-                      <div className="flex flex-col gap-2">
-                        <div className="flex justify-between font-bold">
-                          <p>{service.name}</p>
-                          <p>R$ {service.price.toFixed(2)}</p>
-                        </div>
-                        <div className="flex justify-between">
-                          <p className="text-muted">Data</p>
-                          <p>{selectedDay?.toLocaleDateString('pt-BR')}</p>
-                        </div>
-                        <div className="flex justify-between">
-                          <p className="text-muted">Horário</p>
-                          <p>{selectedTime}</p>
-                        </div>
-                        <div className="flex justify-between">
-                          <p className="text-muted">Barbearia</p>
-                          <p>{barbershopName}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </>
-                )}
-                <SheetFooter>
-                  <Button type="submit" onClick={handleCreateBooking} disabled={!selectedDay || !selectedTime}>Confirmar</Button>
-                </SheetFooter>
-              </SheetContent>
-
-            </Sheet>
-
+      <Card className="rounded-xl min-w-44 p-1">
+        <CardContent className="flex p-1 gap-4">
+          <div className="relative h-30 w-60 rounded-xl overflow-hidden">
+            <Image alt={service.name} loading="eager" src={service.imageUrl} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
           </div>
-        </div>
-      </CardContent>
-    </Card>
+          <div>
+            <h3 className="font-semibold truncate">{service.name}</h3>
+            <p className="text-sm text-muted-foreground">{service.description}</p>
 
-    <Dialog>
-      <SignInDialog />
-    </Dialog>
+            <div className="flex items-center justify-between mt-3">
+              <p className="text-sm font-bold text-primary">R$ {service.price.toFixed(2)}</p>
+
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" disabled={!logged}>Agendar</Button>
+                </SheetTrigger>
+
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Fazer reserva</SheetTitle>
+                    <SheetDescription></SheetDescription>
+                  </SheetHeader>
+
+                  <div className="py-5 flex justify-center border-b">
+                    <Calendar
+                      mode="single"
+                      locale={ptBR}
+                      className="rounded-lg border"
+                      selected={selectedDay}
+                      onSelect={handleDateSelected}
+                      disabled={{ before: new Date() }}
+                    />
+                  </div>
+
+                  {availableTimes && availableTimes.length > 0 && (
+                    <div className="flex py-5 px-3 gap-3 overflow-auto border-b">
+                      {availableTimes.map(time => (
+                        <Button
+                          key={time}
+                          variant={selectedTime === time ? "default" : "outline"}
+                          onClick={() => handleTimeSelected(time)}>{time}
+                        </Button>
+                      ))}
+                    </div>
+                  )}
+
+                  {selectedTime && (<>
+                    <Card className="p-4 m-4">
+                      <CardContent className="p-0">
+                        <div className="flex flex-col gap-2">
+                          <div className="flex justify-between font-bold">
+                            <p>{service.name}</p>
+                            <p>R$ {service.price.toFixed(2)}</p>
+                          </div>
+                          <div className="flex justify-between">
+                            <p className="text-muted">Data</p>
+                            <p>{selectedDay?.toLocaleDateString('pt-BR')}</p>
+                          </div>
+                          <div className="flex justify-between">
+                            <p className="text-muted">Horário</p>
+                            <p>{selectedTime}</p>
+                          </div>
+                          <div className="flex justify-between">
+                            <p className="text-muted">Barbearia</p>
+                            <p>{barbershopName}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </>
+                  )}
+                  <SheetFooter>
+                    <Button type="submit" onClick={handleCreateBooking} disabled={!selectedDay || !selectedTime}>Confirmar</Button>
+                  </SheetFooter>
+                </SheetContent>
+
+              </Sheet>
+
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Dialog>
+        <SignInDialog />
+      </Dialog>
     </>
   );
 }

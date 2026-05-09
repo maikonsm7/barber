@@ -27,7 +27,7 @@ export default async function BarberShopsPage({
             {barberShops &&
                 (<>
                     <h2 className="uppercase text-gray-500 p-3">
-                        Resultado para '{search}''
+                        Resultado para '{search}'
                     </h2>
                     <div className="grid grid-cols-2 gap-4 p-3">
                         {barberShops.map(barbershop => (
