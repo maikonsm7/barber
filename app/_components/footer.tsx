@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="mt-4">
     <Card className="rounded-none py-3">
       <CardContent>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground text-center">
           &copy; {date} BarberShop. Todos os direitos reservados.
         </p>
       </CardContent>
