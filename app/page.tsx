@@ -46,7 +46,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <div className="p-5">
+      <div className="p-5 max-w-150 w-full mx-auto">
         <h2 className="text-xl font-bold">Olá, {data?.user?.name?.split(" ")[0] || ""}</h2>
         <p className="text-muted">{format(new Date(), "EEEE, d 'de' MMMM", { locale: ptBR })}</p>
 
@@ -65,7 +65,7 @@ export default async function Home() {
         </div>
 
         <div className="relative w-full h-37 mt-5 rounded-2xl overflow-hidden">
-          <Image src={banner1} loading="eager" alt="Banner 1" fill className="object-cover" />
+          <Image src={banner1} loading="eager" alt="Banner 1" fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
         </div>
 
         {bookings && bookings.length > 0 && (<>

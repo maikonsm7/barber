@@ -9,7 +9,7 @@ import SidebarSheet from "./sidebar-sheet";
 export default function Header() {
   return (
     <Card className="rounded-none py-3">
-      <CardContent className="flex flex-row items-center justify-between">
+      <CardContent className="flex flex-row items-center justify-between max-w-150 w-full mx-auto">
         <Image src={logo} alt="Logo" width={120} />
 
         <Sheet>

@@ -20,23 +20,26 @@ export default async function BarberShopsPage({
     return (
         <>
 
-        <Header />
-        <div className="p-3">
-        <SearchBar />
-        </div>
-            {barberShops &&
-                (<>
-                    <h2 className="uppercase text-gray-500 p-3">
-                        Resultado para '{search}'
-                    </h2>
-                    <div className="grid grid-cols-2 gap-4 p-3">
-                        {barberShops.map(barbershop => (
-                            <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-                        ))
-                        }
-                    </div>
-                </>)
-            }
+            <Header />
+            <div className="max-w-150 w-full mx-auto">
+
+                <div className="p-3">
+                    <SearchBar />
+                </div>
+                {barberShops &&
+                    (<>
+                        <h2 className="uppercase text-gray-500 p-3">
+                            Resultado para '{search}'
+                        </h2>
+                        <div className="grid grid-cols-2 gap-4 p-3">
+                            {barberShops.map(barbershop => (
+                                <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+                            ))
+                            }
+                        </div>
+                    </>)
+                }
+            </div>
         </>
     )
 }

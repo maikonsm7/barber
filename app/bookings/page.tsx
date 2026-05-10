@@ -26,7 +26,7 @@ export default async function Bookings() {
     return (
         <>
             <Header />
-            <div className="p-4">
+            <div className="p-4 max-w-150 w-full mx-auto">
                 <h1 className="text-xl font-bold">Agendamentos</h1>
 
                 {data?.user ? (<>

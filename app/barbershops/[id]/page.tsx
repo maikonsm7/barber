@@ -29,7 +29,7 @@ export default async function BarberShopPage({
     }
 
     return (
-        <>
+        <div className="max-w-150 w-full mx-auto">
             <div className="relative h-60 w-full rounded-xl">
                 <Image src={barbershop?.imageUrl || ""} loading="eager" alt={barbershop?.name || ""} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
 
@@ -85,6 +85,6 @@ export default async function BarberShopPage({
                     <PhoneItem key={i} phone={phone} />
                 ))}
             </div>
-        </>
+        </div>
     )
 }
