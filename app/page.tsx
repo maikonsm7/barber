@@ -18,8 +18,8 @@ export default async function Home() {
   const data = await getServerSession(authOptions)
 
   // Define o início do dia de hoje (00:00:00)
-  const startOfDay = new Date();
-  startOfDay.setHours(0, 0, 0, 0);
+  const startOfDay = new Date(); // nesse caso pega a data e hora de agora
+  // startOfDay.setHours(0, 0, 0, 0);
 
   // Define o fim do dia de hoje (23:59:59)
   const endOfDay = new Date();

@@ -42,7 +42,7 @@ export default function BookingItem({ booking }: BookinItemProps) {
                 <Card className="mt-3 rounded-xl p-0">
                     <CardContent className="flex justify-between p-0">
                         <div className="flex flex-col gap-2 p-5">
-                            <Badge>{booking.date >= today ? "Confirmado" : "Finalizado"}</Badge>
+                            <Badge className={booking.date >= today ? "" : "bg-gray-500"}>{booking.date >= today ? "Confirmado" : "Finalizado"}</Badge>
                             <h3>{booking.service.name}</h3>
                             <div className="flex items-center gap-2">
                                 <Avatar>
@@ -90,7 +90,7 @@ export default function BookingItem({ booking }: BookinItemProps) {
                     </div>
 
                     <div className="mt-4">
-                        <Badge>{booking.date >= today ? "Confirmado" : "Finalizado"}</Badge>
+                        <Badge className={booking.date >= today ? "" : "bg-gray-500"}>{booking.date >= today ? "Confirmado" : "Finalizado"}</Badge>
                     </div>
 
                     <Card className="p-4 mt-4">
@@ -98,7 +98,7 @@ export default function BookingItem({ booking }: BookinItemProps) {
                             <div className="flex flex-col gap-2">
                                 <div className="flex justify-between font-bold">
                                     <p>{booking.service.name}</p>
-                                    <p>R$ {Number(booking.service.price).toFixed(2)}</p>
+                                    <p>{booking.service.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                 </div>
                                 <div className="flex justify-between">
                                     <p className="text-muted">Data</p>

@@ -77,7 +77,7 @@ model BarberShopService {
   id           String     @id @default(uuid())
   name         String
   description  String
-  price        Decimal    @db.Decimal(10, 2)
+  price        Float    
   imageUrl     String
   barberShopId String
   barberShop   BarberShop @relation(fields: [barberShopId], references: [id])

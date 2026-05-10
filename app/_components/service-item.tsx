@@ -14,18 +14,10 @@ import { toast } from "sonner";
 import { getBookings } from "../_actions/get-bookings";
 import SignInDialog from "./sign-in-dialog";
 import { Dialog } from "./ui/dialog";
+import { BarberShopService } from "../generated/prisma/client";
 
 interface BarberShopServiceProps {
-  service: {
-    id: string;
-    name: string;
-    description: string;
-    price: Number;
-    imageUrl: string;
-    barberShopId: string;
-    createdAt: Date;
-    updatedAt: Date;
-  },
+  service: BarberShopService
   barbershopName: string
 }
 

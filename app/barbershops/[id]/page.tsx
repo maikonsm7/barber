@@ -28,11 +28,6 @@ export default async function BarberShopPage({
         return notFound()
     }
 
-    const serializedServices = barbershop.services.map(service => ({
-        ...service,
-        price: Number(service.price)
-    }))
-
     return (
         <>
             <div className="relative h-60 w-full rounded-xl">
@@ -79,7 +74,7 @@ export default async function BarberShopPage({
                 <h2 className="uppercase text-gray-500">Serviços</h2>
                 <MsgLogged />
                 </div>
-                {serializedServices.length > 0 && serializedServices.map(service => (
+                {barbershop.services.length > 0 && barbershop.services.map(service => (
                     <ServiceItem key={service.id} service={service} barbershopName={barbershop.name} />
                 ))}
             </div>
