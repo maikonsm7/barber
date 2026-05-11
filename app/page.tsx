@@ -54,10 +54,10 @@ export default async function Home() {
         <SearchBar />
         </div>
 
-        <div className="flex justify-between mt-5 overflow-auto pb-4">
+        <div className="flex justify-between mt-5 overflow-auto pb-4 gap-2">
           {quickSearchOptions.map((option, i) => (
             <Button key={i} variant="outline" className="p-4" asChild>
-              <Link href="/">
+              <Link href={`/barbershops?search=${option.title}`}>
                 <Image src={option.imageUrl} alt={option.title} width={20} height={20} /> {option.title}
               </Link>
             </Button>
