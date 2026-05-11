@@ -36,11 +36,12 @@ export default function SidebarSheet() {
         </div>
       ) : (
         <div className="flex items-center justify-between p-5">
-          <h2 className="font-bold text-lg">Olá! Faça seu login!</h2>
+          <h2 className="font-bold">Olá! Faça seu login!</h2>
           <Dialog>
             <DialogTrigger asChild>
               <Button>
                 <LogInIcon />
+                Entrar
               </Button>
             </DialogTrigger>
             <SignInDialog />
